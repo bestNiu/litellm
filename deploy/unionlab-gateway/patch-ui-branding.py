@@ -2,14 +2,15 @@
 from pathlib import Path
 
 UI_ROOT = Path(__file__).resolve().parent / "custom-ui"
-BRAND_NAME = "unionlab-gateway"
+BRAND_NAME = "unionlabLLM"
+LOGO_URL = "https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png"
 LOGO_IMG_JS = (
-    '(0,t.jsx)("img",{src:"/get_image",alt:"unionlab-gateway",'
-    'className:"h-16 mx-auto object-contain"})'
+    f'(0,t.jsx)("img",{{src:"{LOGO_URL}",alt:"{BRAND_NAME}",'
+    'className:"h-16 mx-auto object-contain mb-2"}})'
 )
 LOADING_LOGO_JS = (
-    '(0,t.jsx)("img",{src:"/get_image",alt:"unionlab-gateway",'
-    'className:"h-10 object-contain"})'
+    f'(0,t.jsx)("img",{{src:"{LOGO_URL}",alt:"{BRAND_NAME}",'
+    'className:"h-10 object-contain"}})'
 )
 
 REPLACEMENTS = [
@@ -18,15 +19,18 @@ REPLACEMENTS = [
     ("Access your LiteLLM Admin UI.", f"Access {BRAND_NAME} Admin UI."),
     ('alt:"LiteLLM Brand"', f'alt:"{BRAND_NAME}"'),
     ("Thanks for using LiteLLM!", f"Thanks for using {BRAND_NAME}!"),
+    ("unionlab-gateway Admin UI", f"{BRAND_NAME} Admin UI"),
+    ("unionlab-gateway", BRAND_NAME),
     (
         '<div class="text-lg font-medium py-2 pr-4 border-r border-r-gray-200">🚅 LiteLLM</div>',
-        '<div class="py-2 pr-4 border-r border-r-gray-200"><img src="/get_image" alt="unionlab-gateway" class="h-10 object-contain" /></div>',
+        f'<div class="py-2 pr-4 border-r border-r-gray-200"><img src="{LOGO_URL}" alt="{BRAND_NAME}" class="h-10 object-contain" /></div>',
     ),
     (
         '(0,t.jsx)(G,{level:2,children:"🚅 LiteLLM"})',
         f'(0,t.jsx)("div",{{className:"text-center",children:{LOGO_IMG_JS}}})',
     ),
     ('children:"🚅 LiteLLM"', f"children:{LOADING_LOGO_JS}"),
+    ('src:"/get_image"', f'src:"{LOGO_URL}"'),
 ]
 
 

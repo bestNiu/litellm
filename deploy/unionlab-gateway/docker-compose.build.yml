@@ -13,13 +13,13 @@ services:
     network_mode: host
     volumes:
       - ./config.yaml:/app/config.yaml:ro
-      # 若已单独构建 custom-ui，取消下行注释以覆盖镜像内 UI
-      # - ./custom-ui:/app/litellm/proxy/_experimental/out:ro
+      - ./custom-ui:/app/litellm/proxy/_experimental/out:ro
     env_file:
       - .env
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
       STORE_MODEL_IN_DB: "True"
+      LITELLM_UI_PATH: /app/litellm/proxy/_experimental/out
     command:
       - "--config"
       - "/app/config.yaml"

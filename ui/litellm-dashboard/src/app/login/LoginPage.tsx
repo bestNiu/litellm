@@ -13,6 +13,18 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useWorker } from "@/hooks/useWorker";
 
+const BRAND_NAME = "unionlabLLM";
+const LOGO_URL = "https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png";
+
+function BrandHeader() {
+  return (
+    <div className="text-center">
+      <img src={LOGO_URL} alt={BRAND_NAME} className="h-16 mx-auto object-contain mb-2" />
+      <Typography.Title level={2}>{BRAND_NAME}</Typography.Title>
+    </div>
+  );
+}
+
 function LoginPageContent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -149,9 +161,7 @@ function LoginPageContent() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <Card className="w-full max-w-lg shadow-md">
           <Space direction="vertical" size="middle" className="w-full">
-            <div className="text-center">
-              <Title level={2}>🚅 LiteLLM</Title>
-            </div>
+            <BrandHeader />
 
             <Alert
               message="Admin UI Disabled"
@@ -179,13 +189,11 @@ function LoginPageContent() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <Card className="w-full max-w-lg shadow-md">
         <Space direction="vertical" size="middle" className="w-full">
-          <div className="text-center">
-            <Title level={2}>🚅 LiteLLM</Title>
-          </div>
+          <BrandHeader />
 
           <div className="text-center">
             <Title level={3}>Login</Title>
-            <Text type="secondary">Access your LiteLLM Admin UI.</Text>
+            <Text type="secondary">Access {BRAND_NAME} Admin UI.</Text>
           </div>
 
           {!uiConfig?.hide_default_credentials_hint && (
