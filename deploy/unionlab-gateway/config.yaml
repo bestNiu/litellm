@@ -1,0 +1,16 @@
+model_list: []
+
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  hide_default_credentials_hint: true
+
+environment_variables:
+  UI_LOGO_PATH: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
+  LITELLM_FAVICON_URL: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
+
+litellm_settings:
+  drop_params: true
+  set_verbose: false
+  ui_theme_config:
+    logo_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
+    favicon_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
