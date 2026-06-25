@@ -1,0 +1,33 @@
+# 使用官方预构建镜像快速部署
+# 用法: docker compose up -d
+
+services:
+  unionlab-gateway:
+    image: ghcr.io/berriai/litellm-database:v1.89.2
+    container_name: unionlab-gateway
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
+      - ./custom-ui:/app/litellm/proxy/_experimental/out:ro
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
+      STORE_MODEL_IN_DB: "True"
+      LITELLM_UI_PATH: /app/litellm/proxy/_experimental/out
+    command:
+      - "--config"
+      - "/app/config.yaml"
+      - "--port"
+      - "4000"
+      - "--num_workers"
+      - "4"
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:4000/health/liveliness')"
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
