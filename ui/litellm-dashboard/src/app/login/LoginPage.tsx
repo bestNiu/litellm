@@ -4,6 +4,7 @@ import { useLogin } from "@/app/(dashboard)/hooks/login/useLogin";
 import { useUIConfig } from "@/app/(dashboard)/hooks/uiConfig/useUIConfig";
 import BrandHeader from "@/components/common_components/BrandHeader";
 import LoadingScreen from "@/components/common_components/LoadingScreen";
+import LoginPromoPanel from "@/components/common_components/LoginPromoPanel";
 import { UNIONLAB_BRAND_NAME, UNIONLAB_LOGIN_BG_URL } from "@/lib/unionlabBrand";
 import { exchangeLoginCode, getProxyBaseUrl, switchToWorkerUrl } from "@/components/networking";
 import { clearTokenCookies, getCookieFromDocument } from "@/utils/cookieUtils";
@@ -24,8 +25,14 @@ const loginPageStyle: CSSProperties = {
 
 function LoginPageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen flex items-center justify-center" style={loginPageStyle}>
-      <Card className="w-full max-w-lg shadow-md bg-white/95 backdrop-blur-sm">{children}</Card>
+    <div className="min-h-screen flex flex-col lg:flex-row items-stretch" style={loginPageStyle}>
+      <div className="hidden lg:flex lg:flex-[1.1] lg:min-w-0">
+        <LoginPromoPanel />
+      </div>
+
+      <div className="flex flex-1 items-center justify-center px-4 py-10 sm:px-8 lg:justify-end lg:pr-12 xl:pr-20 2xl:pr-28">
+        <Card className="w-full max-w-lg shadow-lg bg-white/95 backdrop-blur-sm">{children}</Card>
+      </div>
     </div>
   );
 }
