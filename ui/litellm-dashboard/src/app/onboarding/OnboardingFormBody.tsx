@@ -1,3 +1,4 @@
+import BrandHeader from "@/components/common_components/BrandHeader";
 import React from "react";
 import { Alert, Button, Card, Form, Input, Typography } from "antd";
 
@@ -19,9 +20,7 @@ export function OnboardingFormBody({ variant, userEmail, isPending, claimError, 
   return (
     <div className="mx-auto w-full max-w-md mt-10">
       <Card>
-        <Typography.Title level={5} className="text-center mb-5">
-          🚅 LiteLLM
-        </Typography.Title>
+        <BrandHeader titleLevel={5} logoClassName="h-10 mx-auto object-contain mb-2" />
         <Typography.Title level={3}>{variant === "reset_password" ? "Reset Password" : "Sign Up"}</Typography.Title>
         <Typography.Text>
           {variant === "reset_password"

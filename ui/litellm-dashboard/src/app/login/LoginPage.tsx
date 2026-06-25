@@ -2,7 +2,9 @@
 
 import { useLogin } from "@/app/(dashboard)/hooks/login/useLogin";
 import { useUIConfig } from "@/app/(dashboard)/hooks/uiConfig/useUIConfig";
+import BrandHeader from "@/components/common_components/BrandHeader";
 import LoadingScreen from "@/components/common_components/LoadingScreen";
+import { UNIONLAB_BRAND_NAME, UNIONLAB_LOGIN_BG_URL } from "@/lib/unionlabBrand";
 import { exchangeLoginCode, getProxyBaseUrl, switchToWorkerUrl } from "@/components/networking";
 import { clearTokenCookies, getCookieFromDocument } from "@/utils/cookieUtils";
 import { isJwtExpired } from "@/utils/jwtUtils";
@@ -10,17 +12,20 @@ import { consumeReturnUrl, getReturnUrl, isValidReturnUrl } from "@/utils/return
 import { InfoCircleOutlined, CloudServerOutlined } from "@ant-design/icons";
 import { Alert, Button, Card, Form, Input, Popover, Select, Space, Typography } from "antd";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { useWorker } from "@/hooks/useWorker";
 
-const BRAND_NAME = "unionlabLLM";
-const LOGO_URL = "https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png";
+const loginPageStyle: CSSProperties = {
+  backgroundImage: `url(${UNIONLAB_LOGIN_BG_URL})`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+};
 
-function BrandHeader() {
+function LoginPageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="text-center">
-      <img src={LOGO_URL} alt={BRAND_NAME} className="h-16 mx-auto object-contain mb-2" />
-      <Typography.Title level={2}>{BRAND_NAME}</Typography.Title>
+    <div className="min-h-screen flex items-center justify-center" style={loginPageStyle}>
+      <Card className="w-full max-w-lg shadow-md bg-white/95 backdrop-blur-sm">{children}</Card>
     </div>
   );
 }
@@ -158,8 +163,7 @@ function LoginPageContent() {
   // Show disabled message if admin UI is disabled
   if (uiConfig && uiConfig.admin_ui_disabled) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Card className="w-full max-w-lg shadow-md">
+      <LoginPageShell>
           <Space direction="vertical" size="middle" className="w-full">
             <BrandHeader />
 
@@ -180,20 +184,18 @@ function LoginPageContent() {
               showIcon
             />
           </Space>
-        </Card>
-      </div>
+      </LoginPageShell>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-lg shadow-md">
+    <LoginPageShell>
         <Space direction="vertical" size="middle" className="w-full">
           <BrandHeader />
 
           <div className="text-center">
             <Title level={3}>Login</Title>
-            <Text type="secondary">Access {BRAND_NAME} Admin UI.</Text>
+            <Text type="secondary">Access {UNIONLAB_BRAND_NAME} Admin UI.</Text>
           </div>
 
           {!uiConfig?.hide_default_credentials_hint && (
@@ -329,8 +331,7 @@ function LoginPageContent() {
             }
           />
         )}
-      </Card>
-    </div>
+    </LoginPageShell>
   );
 }
 

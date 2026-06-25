@@ -92,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     <span
                       className="absolute -left-2 -top-1 animate-bounce text-lg"
                       style={{ animationDuration: "2s" }}
-                      title="Thanks for using LiteLLM!"
+                      title="Thanks for using unionlabLLM!"
                     >
                       🌑
                     </span>

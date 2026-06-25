@@ -13,8 +13,8 @@ deploy/unionlab-gateway/
 ├── .env.example               # 环境变量模板（可提交 Git）
 ├── .env                       # 实际环境变量（含密钥，勿提交）
 ├── .gitignore                 # 忽略 .env 与 custom-ui/
-├── patch-ui-branding.py       # UI 品牌替换脚本
-└── custom-ui/                 # UI 构建产物（勿提交，需本地生成）
+├── build-ui.sh                # 从源码构建 UI 并同步到 custom-ui/
+└── custom-ui/                 # UI 构建产物（勿提交，由 build-ui.sh 生成）
 ```
 
 源码仓库根目录为 `app/`（即本目录的上两级 `../..`），构建时会从该路径读取 Dockerfile 与完整代码。
@@ -24,6 +24,7 @@ deploy/unionlab-gateway/
 ## 前置条件
 
 - Docker Engine 与 Docker Compose v2
+- Node.js 20（推荐通过 nvm 安装，用于 UI 构建）
 - 可访问的 PostgreSQL 数据库（当前使用阿里云 RDS）
 - RDS 安全组/白名单已放行部署服务器的 IP，端口 `5432`
 - 服务器可用磁盘空间 ≥ 5 GB（首次源码构建约需 2–3 GB 镜像空间）
@@ -114,29 +115,33 @@ docker compose -f docker-compose.build.yml up -d
 
 ## UI 二次开发
 
-UI 源码位于仓库 `ui/litellm-dashboard/`。
+UI 源码位于仓库 `ui/litellm-dashboard/`，品牌配置集中在 `ui/litellm-dashboard/src/lib/unionlabBrand.ts`。
 
-### 构建并替换 UI
+### 安装 Node.js（首次）
 
 ```bash
-# 1. 在源码目录构建 UI
-cd /root/app/litellm/app/ui/litellm-dashboard
-npm install
-npm run build
-bash build_ui.sh
-
-# 2. 复制产物到部署目录
-cp -r ../../litellm/proxy/_experimental/out/* \
-  /root/app/litellm/app/deploy/unionlab-gateway/custom-ui/
-
-# 3. 应用 UnionLab 品牌替换（可选）
-cd /root/app/litellm/app/deploy/unionlab-gateway
-python3 patch-ui-branding.py
+curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
+source ~/.nvm/nvm.sh
+nvm install 20
+nvm use 20
 ```
 
-### 启用自定义 UI 挂载
+### 构建并部署 UI
 
-**源码构建模式**：编辑 `docker-compose.build.yml`，取消 `custom-ui` volume 注释，并添加环境变量：
+```bash
+cd /root/app/litellm/app/deploy/unionlab-gateway
+chmod +x build-ui.sh
+./build-ui.sh
+docker compose -f docker-compose.build.yml restart unionlab-gateway
+```
+
+`build-ui.sh` 会执行 `npm install && npm run build`，并将产物同步到：
+- `deploy/unionlab-gateway/custom-ui/`（运行时挂载目录）
+- `litellm/proxy/_experimental/out/`（Docker 镜像构建时使用）
+
+### 自定义 UI 挂载
+
+**源码构建模式**（`docker-compose.build.yml`）已默认挂载 `custom-ui`：
 
 ```yaml
 volumes:
@@ -156,8 +161,8 @@ environment:
 |-----------|-------------|------|
 | `config.yaml` | ✅ | 业务配置 |
 | `docker-compose*.yml` | ✅ | 部署编排 |
+| `build-ui.sh` | ✅ | UI 构建脚本 |
 | `.env.example` | ✅ | 环境变量模板 |
-| `patch-ui-branding.py` | ✅ | 品牌脚本 |
 | `.env` | ❌ | 含密钥，已在 `.gitignore` |
 | `custom-ui/` | ❌ | 构建产物，已在 `.gitignore` |
 
@@ -212,7 +217,7 @@ git push
 |------|---------|------|
 | 容器反复重启 | RDS 不可达或密码错误 | 检查 `.env` 与 RDS 白名单，`docker compose logs` 查看报错 |
 | `Master key is not initialized` | 未配置 `.env` 或未加载 | 确认 `.env` 存在且含 `LITELLM_MASTER_KEY` |
-| UI 404 或样式异常 | UI 产物未构建或挂载路径错误 | 重新构建 UI 并检查 `custom-ui/` 目录 |
+| UI 404 或样式异常 | UI 产物未构建或挂载路径错误 | 运行 `./build-ui.sh` 后重启容器 |
 | 构建失败 | 网络问题或磁盘不足 | 检查 Docker 日志，`df -h` 确认磁盘空间 |
 
 ---
