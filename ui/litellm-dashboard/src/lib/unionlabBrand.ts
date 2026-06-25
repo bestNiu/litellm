@@ -1,4 +1,9 @@
 export const UNIONLAB_BRAND_NAME = "unionlabLLM";
+
+/** Replace upstream LiteLLM branding in user-visible labels while keeping API identifiers intact. */
+export function brandifyDisplayText(text: string): string {
+  return text.replace(/LiteLLM/g, UNIONLAB_BRAND_NAME).replace(/\blitellm\b/g, UNIONLAB_BRAND_NAME);
+}
 export const UNIONLAB_LOGO_URL =
   "https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png";
 export const UNIONLAB_LOGIN_BG_URL =

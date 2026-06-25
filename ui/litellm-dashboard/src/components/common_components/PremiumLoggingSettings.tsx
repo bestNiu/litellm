@@ -30,7 +30,7 @@ export function PremiumLoggingSettings({
         </div>
         <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
           <Text className="text-sm text-yellow-800">
-            Setting Key/Team logging settings is a LiteLLM Enterprise feature. Global Logging Settings are available for
+            Setting Key/Team logging settings is a unionlabLLM Enterprise feature. Global Logging Settings are available for
             all free users. Get a trial key{" "}
             <a href="https://www.litellm.ai/#pricing" target="_blank" rel="noopener noreferrer" className="underline">
               here

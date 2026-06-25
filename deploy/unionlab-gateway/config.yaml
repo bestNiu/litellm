@@ -16,3 +16,4 @@ litellm_settings:
   ui_theme_config:
     logo_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
     favicon_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
+    hide_upstream_ui_extras: true

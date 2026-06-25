@@ -1,4 +1,5 @@
 import { resolveLogoSrc } from "@/lib/assetPaths";
+import { brandifyDisplayText } from "@/lib/unionlabBrand";
 
 // Legacy enum - keeping for backward compatibility
 export enum GuardrailProviders {
@@ -167,7 +168,7 @@ export const getGuardrailLogoAndName = (guardrailValue: string): { logo: string;
   const displayName = currentProviders[enumKey as keyof typeof currentProviders];
   const logo = resolveLogoSrc(guardrailLogoMap[displayName as keyof typeof guardrailLogoMap]) ?? "";
 
-  return { logo, displayName: displayName || guardrailValue };
+  return { logo, displayName: brandifyDisplayText(displayName || guardrailValue) };
 };
 
 /** Tri-state UI value for `litellm_params.skip_system_message_in_guardrail` (inherit = use global). */

@@ -377,7 +377,7 @@ describe("ModelInfoView", () => {
     render(<ModelInfoView {...DEFAULT_ADMIN_PROPS} />, { wrapper });
     await waitFor(() => {
       expect(screen.getByText("Provider")).toBeInTheDocument();
-      expect(screen.getByText("LiteLLM Model")).toBeInTheDocument();
+      expect(screen.getByText("unionlabLLM Model")).toBeInTheDocument();
       expect(screen.getByText("Pricing")).toBeInTheDocument();
     });
   });
@@ -442,7 +442,7 @@ describe("ModelInfoView", () => {
 
     await waitFor(() => {
       expect(screen.getByPlaceholderText("Enter model name")).toBeInTheDocument();
-      expect(screen.getByPlaceholderText("Enter LiteLLM model name")).toBeInTheDocument();
+      expect(screen.getByPlaceholderText("Enter unionlabLLM model name")).toBeInTheDocument();
     });
   });
 
@@ -521,10 +521,10 @@ describe("ModelInfoView", () => {
     });
   });
 
-  it("should display LiteLLM Params section", async () => {
+  it("should display unionlabLLM Params section", async () => {
     render(<ModelInfoView {...DEFAULT_ADMIN_PROPS} />, { wrapper });
     await waitFor(() => {
-      expect(screen.getByText("LiteLLM Params")).toBeInTheDocument();
+      expect(screen.getByText("unionlabLLM Params")).toBeInTheDocument();
     });
   });
 
@@ -543,7 +543,7 @@ describe("ModelInfoView", () => {
     });
   });
 
-  it("should keep selector credential and ignore litellm_credential_name from LiteLLM Params json", async () => {
+  it("should keep selector credential and ignore litellm_credential_name from unionlabLLM Params json", async () => {
     const user = userEvent.setup();
     render(<ModelInfoView {...DEFAULT_ADMIN_PROPS} />, { wrapper });
 

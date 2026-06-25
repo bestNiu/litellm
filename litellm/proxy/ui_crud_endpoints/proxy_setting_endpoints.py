@@ -54,6 +54,14 @@ class UIThemeConfig(BaseModel):
         description="URL to custom favicon image. Must be an HTTP/HTTPS URL to a .ico, .png, or .svg file",
     )
 
+    hide_upstream_ui_extras: bool = Field(
+        default=False,
+        description=(
+            "Hide external Docs/Blog/community navigation links and the notifications bell "
+            "in the top bar, plus UI preference toggles in the account dropdown."
+        ),
+    )
+
 
 class SettingsResponse(BaseModel):
     """Base response model for settings with values and schema information"""

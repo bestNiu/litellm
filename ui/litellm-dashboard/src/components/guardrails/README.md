@@ -1,6 +1,6 @@
 # Guardrail Configuration Components
 
-This directory contains reusable React components for configuring various guardrail types in the LiteLLM dashboard.
+This directory contains reusable React components for configuring various guardrail types in the unionlabLLM dashboard.
 
 ## Azure Text Moderation Configuration
 

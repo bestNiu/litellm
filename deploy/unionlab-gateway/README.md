@@ -1,6 +1,6 @@
 # UnionLab Gateway 部署指南
 
-本目录包含 UnionLab Gateway（基于 [LiteLLM](https://github.com/BerriAI/litellm)）的 Docker Compose 部署配置，使用外部 PostgreSQL（阿里云 RDS），不启动本地数据库容器。
+本目录包含 UnionLab Gateway（基于 unionlabLLM，上游为 [LiteLLM](https://github.com/BerriAI/litellm)）的 Docker Compose 部署配置，使用外部 PostgreSQL（阿里云 RDS），不启动本地数据库容器。
 
 ## 目录结构
 
@@ -9,7 +9,7 @@ deploy/unionlab-gateway/
 ├── README.md                  # 本文档
 ├── docker-compose.build.yml   # 从源码构建并部署（推荐用于二次开发）
 ├── docker-compose.yml         # 使用官方预构建镜像快速部署
-├── config.yaml                # LiteLLM Proxy 业务配置
+├── config.yaml                # unionlabLLM Proxy 业务配置
 ├── .env.example               # 环境变量模板（可提交 Git）
 ├── .env                       # 实际环境变量（含密钥，勿提交）
 ├── .gitignore                 # 忽略 .env 与 custom-ui/
@@ -56,6 +56,8 @@ cp .env.example .env
 ### 2. 检查业务配置
 
 按需修改 `config.yaml`（Logo、主题、模型列表等）。`master_key` 从环境变量 `LITELLM_MASTER_KEY` 读取，无需在文件中硬编码。
+
+`litellm_settings.ui_theme_config.hide_upstream_ui_extras: true` 可隐藏顶部 **Docs / Blog / Slack / GitHub** 链接、右上角 **通知铃铛**，以及用户菜单中的 **Hide New Feature Indicators** 等偏好开关（UnionLab 默认已开启）。
 
 ### 3. 选择部署方式并启动
 
@@ -224,6 +226,6 @@ git push
 
 ## 相关链接
 
-- LiteLLM 官方文档：https://docs.litellm.ai/
+- unionlabLLM 官方文档（上游）：https://docs.litellm.ai/
 - 源码 UI 目录：`../../ui/litellm-dashboard/`
 - Docker 构建说明：`../../docker/README.md`

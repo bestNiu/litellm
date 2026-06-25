@@ -6,6 +6,7 @@ interface ThemeContextType {
   setLogoUrl: (url: string | null) => void;
   faviconUrl: string | null;
   setFaviconUrl: (url: string | null) => void;
+  hideUpstreamUiExtras: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -26,6 +27,7 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, accessToken }) => {
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
   const [faviconUrl, setFaviconUrl] = useState<string | null>(null);
+  const [hideUpstreamUiExtras, setHideUpstreamUiExtras] = useState(false);
 
   useEffect(() => {
     const loadThemeSettings = async () => {
@@ -44,6 +46,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, accessTo
           }
           if (data.values?.favicon_url) {
             setFaviconUrl(data.values.favicon_url);
+          }
+          if (data.values?.hide_upstream_ui_extras === true) {
+            setHideUpstreamUiExtras(true);
           }
         }
       } catch (error) {
@@ -71,6 +76,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children, accessTo
   }, [faviconUrl]);
 
   return (
-    <ThemeContext.Provider value={{ logoUrl, setLogoUrl, faviconUrl, setFaviconUrl }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider
+      value={{ logoUrl, setLogoUrl, faviconUrl, setFaviconUrl, hideUpstreamUiExtras }}
+    >
+      {children}
+    </ThemeContext.Provider>
   );
 };

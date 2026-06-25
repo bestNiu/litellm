@@ -170,7 +170,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
           </Panel>
         )}
 
-        {/* LiteLLM Parameters */}
+        {/* unionlabLLM Parameters */}
         {shouldShow(AGENT_FORM_CONFIG.litellm.key) && (
           <Panel header={AGENT_FORM_CONFIG.litellm.title} key={AGENT_FORM_CONFIG.litellm.key}>
             {AGENT_FORM_CONFIG.litellm.fields.map((field) => (

@@ -93,7 +93,7 @@ vi.mock("./Navbar/CommunityEngagementButtons/CommunityEngagementButtons", () => 
 }));
 
 // Create mock functions that can be controlled in tests
-let mockUseThemeImpl = () => ({ logoUrl: null as string | null });
+let mockUseThemeImpl = () => ({ logoUrl: null as string | null, hideUpstreamUiExtras: false });
 let mockUseHealthReadinessDetailsImpl = () => ({ data: null as any });
 let mockGetLocalStorageItemImpl = (key: string) => null as string | null;
 let mockUseAuthorizedImpl = () => ({
@@ -233,15 +233,29 @@ describe("Navbar", () => {
   });
 
   it("should use custom logo from theme context", () => {
-    mockUseThemeImpl = () => ({ logoUrl: "https://example.com/custom-logo.png" });
+    mockUseThemeImpl = () => ({ logoUrl: "https://example.com/custom-logo.png", hideUpstreamUiExtras: false });
 
     renderWithProviders(<Navbar {...defaultProps} />);
 
-    const logoImg = screen.getByAltText("LiteLLM Brand");
+    const logoImg = screen.getByAltText("unionlabLLM Brand");
     expect(logoImg).toHaveAttribute("src", "https://example.com/custom-logo.png");
 
     // Reset mock
-    mockUseThemeImpl = () => ({ logoUrl: null });
+    mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: false });
+  });
+
+  it("should hide docs, blog, community links, and notifications when hideUpstreamUiExtras is enabled", () => {
+    mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: true });
+
+    renderWithProviders(<Navbar {...defaultProps} />);
+
+    expect(screen.queryByText("Docs")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("blog-dropdown")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("community-engagement-buttons")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^notifications$/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /open account menu/i })).toBeInTheDocument();
+
+    mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: false });
   });
 
   it("should hide user dropdown and notifications on public pages", () => {

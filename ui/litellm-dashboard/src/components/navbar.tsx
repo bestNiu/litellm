@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const baseUrl = getProxyBaseUrl();
   const proxySettings = useProxySettings(accessToken);
-  const { logoUrl } = useTheme();
+  const { logoUrl, hideUpstreamUiExtras } = useTheme();
   const { data: healthData } = useHealthReadinessDetails(accessToken);
   const version = healthData?.litellm_version;
   const disableBouncingIcon = useDisableBouncingIcon();
@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   <div className="flex h-10 max-w-48 items-center justify-center overflow-hidden">
                     <img
                       src={imageUrl}
-                      alt="LiteLLM Brand"
+                      alt="unionlabLLM Brand"
                       className="h-auto max-h-full w-auto max-w-full object-contain"
                     />
                   </div>
@@ -125,24 +125,26 @@ const Navbar: React.FC<NavbarProps> = ({
               </div>
             )}
 
-            <nav
-              aria-label="Product documentation"
-              className={`flex min-w-0 items-center gap-2 ${showWorkerSwitch ? "border-l border-gray-200 pl-4" : ""}`}
-            >
-              <a
-                href="https://docs.litellm.ai/docs/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={NAV_PRODUCT_LINK_CLASS}
+            {!hideUpstreamUiExtras && (
+              <nav
+                aria-label="Product documentation"
+                className={`flex min-w-0 items-center gap-2 ${showWorkerSwitch ? "border-l border-gray-200 pl-4" : ""}`}
               >
-                Docs
-                {/* Layout parity with Blog chevron — intentional single-level link */}
-                <DownOutlined className="pointer-events-none text-[10px] opacity-0" aria-hidden />
-              </a>
-              <BlogDropdown />
-            </nav>
+                <a
+                  href="https://docs.litellm.ai/docs/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={NAV_PRODUCT_LINK_CLASS}
+                >
+                  Docs
+                  {/* Layout parity with Blog chevron — intentional single-level link */}
+                  <DownOutlined className="pointer-events-none text-[10px] opacity-0" aria-hidden />
+                </a>
+                <BlogDropdown />
+              </nav>
+            )}
 
-            {!hideCommunityLinks && (
+            {!hideUpstreamUiExtras && !hideCommunityLinks && (
               <div className="flex shrink-0 items-center border-l border-gray-200 pl-4">
                 <CommunityEngagementButtons />
               </div>
@@ -151,8 +153,10 @@ const Navbar: React.FC<NavbarProps> = ({
             {!isPublicPage && (
               <div className="flex shrink-0 items-center border-l border-gray-200 pl-4">
                 <div className="flex items-center gap-0.5 rounded-lg bg-gray-50 px-1 py-0 transition-colors hover:bg-gray-100">
-                  <NotificationsBell />
-                  <span className="mx-0.5 h-6 w-px shrink-0 bg-gray-200" aria-hidden />
+                  {!hideUpstreamUiExtras && <NotificationsBell />}
+                  {!hideUpstreamUiExtras && (
+                    <span className="mx-0.5 h-6 w-px shrink-0 bg-gray-200" aria-hidden />
+                  )}
                   <UserDropdown onLogout={handleLogout} />
                 </div>
               </div>

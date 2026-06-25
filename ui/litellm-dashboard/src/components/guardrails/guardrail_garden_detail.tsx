@@ -18,7 +18,7 @@ const GuardrailDetailView: React.FC<GuardrailDetailViewProps> = ({ card, onBack,
   const [activeTab, setActiveTab] = useState("overview");
 
   const detailRows = [
-    { property: "Provider", value: card.category === "litellm" ? "LiteLLM Content Filter" : "Partner Guardrail" },
+    { property: "Provider", value: card.category === "litellm" ? "unionlabLLM Content Filter" : "Partner Guardrail" },
     ...(card.subcategory ? [{ property: "Subcategory", value: card.subcategory }] : []),
     ...(card.category === "litellm" ? [{ property: "Cost", value: "$0 / request" }] : []),
     ...(card.category === "litellm" ? [{ property: "External Dependencies", value: "None" }] : []),
@@ -152,7 +152,7 @@ const GuardrailDetailView: React.FC<GuardrailDetailViewProps> = ({ card, onBack,
             {/* Guardrail ID */}
             <div style={{ marginBottom: 28 }}>
               <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Guardrail ID</div>
-              <div style={{ fontSize: 13, color: "#202124", wordBreak: "break-all" }}>litellm/{card.id}</div>
+              <div style={{ fontSize: 13, color: "#202124", wordBreak: "break-all" }}>unionlabLLM/{card.id}</div>
             </div>
 
             {/* Type */}

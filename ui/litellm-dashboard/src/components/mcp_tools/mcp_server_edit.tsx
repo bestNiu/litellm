@@ -1185,7 +1185,7 @@ const MCPServerEdit: React.FC<MCPServerEditProps> = ({
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
                       AWS Role ARN
-                      <Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials.">
+                      <Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, unionlabLLM calls sts:AssumeRole to get temporary credentials.">
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>

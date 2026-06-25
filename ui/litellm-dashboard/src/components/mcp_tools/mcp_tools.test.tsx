@@ -131,7 +131,7 @@ describe("MCPToolsViewer auth gate routing", () => {
     expect(screen.queryByText(GATE_TEXT)).not.toBeInTheDocument();
   });
 
-  it("does not gate an M2M server; lists with the LiteLLM key", async () => {
+  it("does not gate an M2M server; lists with the unionlabLLM key", async () => {
     renderViewer({ oauth2_flow: "client_credentials", delegate_auth_to_upstream: false });
 
     await waitFor(() => expect(vi.mocked(listMCPTools)).toHaveBeenCalledWith("litellm-key", "srv-1", undefined));

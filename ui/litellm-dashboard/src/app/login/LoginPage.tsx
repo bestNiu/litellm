@@ -212,7 +212,7 @@ function LoginPageContent() {
                 <>
                   <Paragraph className="text-sm">
                     By default, Username is <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">admin</code> and
-                    Password is your set LiteLLM Proxy
+                    Password is your set unionlabLLM Proxy
                     <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">MASTER_KEY</code>.
                   </Paragraph>
                   <Paragraph className="text-sm">
@@ -331,7 +331,7 @@ function LoginPageContent() {
             closable
             message={
               <Text>
-                Single Sign-On (SSO) is enabled. LiteLLM no longer automatically redirects to the SSO login flow upon
+                Single Sign-On (SSO) is enabled. unionlabLLM no longer automatically redirects to the SSO login flow upon
                 loading this page. To re-enable auto-redirect-to-SSO, set{" "}
                 <Text code>AUTO_REDIRECT_UI_LOGIN_TO_SSO=true</Text> in your environment configuration.
               </Text>

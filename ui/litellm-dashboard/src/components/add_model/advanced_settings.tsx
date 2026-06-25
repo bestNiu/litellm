@@ -268,9 +268,9 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               onCacheControlChange={handleCacheControlChange}
             />
             <Form.Item
-              label="LiteLLM Params"
+              label="unionlabLLM Params"
               name="litellm_extra_params"
-              tooltip="Optional litellm params used for making a litellm.completion() call."
+              tooltip="Optional unionlabLLM params used for making a unionlabLLM completion call."
               className="mb-4 mt-4"
               rules={[{ validator: formItemValidateJSON }]}
             >
@@ -287,9 +287,9 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               <Col span={10}></Col>
               <Col span={10}>
                 <Text className="text-gray-600 text-sm">
-                  Pass JSON of litellm supported params{" "}
+                  Pass JSON of unionlabLLM supported params{" "}
                   <Link href="https://docs.litellm.ai/docs/completion/input" target="_blank">
-                    litellm.completion() call
+                    unionlabLLM completion call
                   </Link>
                 </Text>
               </Col>

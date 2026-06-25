@@ -15,7 +15,7 @@ describe("LitellmModelNameField", () => {
         />
       </Form>,
     );
-    expect(getByText("LiteLLM Model Name(s)")).toBeInTheDocument();
+    expect(getByText("unionlabLLM Model Name(s)")).toBeInTheDocument();
   });
 
   it("should show Azure placeholder as 'my-deployment'", () => {
