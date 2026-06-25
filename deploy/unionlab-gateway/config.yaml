@@ -3,6 +3,8 @@ model_list: []
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
   hide_default_credentials_hint: true
+  store_model_in_db: true
+  store_prompts_in_spend_logs: true
 
 environment_variables:
   UI_LOGO_PATH: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png

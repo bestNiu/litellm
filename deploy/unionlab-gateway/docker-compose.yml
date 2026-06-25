@@ -15,6 +15,7 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
       STORE_MODEL_IN_DB: "True"
+      STORE_PROMPTS_IN_SPEND_LOGS: "True"
       LITELLM_UI_PATH: /app/litellm/proxy/_experimental/out
     command:
       - "--config"
