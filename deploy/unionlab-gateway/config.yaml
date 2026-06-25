@@ -1,4 +1,723 @@
-model_list: []
+model_list:
+  # ── 智能体基座 ──────────────────────────────────────────────────────────────
+  - model_name: qwen3.7-max
+    litellm_params:
+      model: dashscope/qwen3.7-max
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 全能智能体基座，面向智能体时代的新一代旗舰模型
+      max_input_tokens: 1048576
+      max_output_tokens: 65536
+      input_cost_per_token: 0.000012
+      output_cost_per_token: 0.000036
+      input_cost_per_token_batches: 0.000006
+      output_cost_per_token_batches: 0.000018
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_parallel_function_calling: true
+
+  - model_name: qwen3.7-plus
+    litellm_params:
+      model: dashscope/qwen3.7-plus
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 多模态智能体基座，视觉-语言一体化
+      max_input_tokens: 1048576
+      max_output_tokens: 65536
+      input_cost_per_token: 0.000002
+      output_cost_per_token: 0.000008
+      input_cost_per_token_batches: 0.000001
+      output_cost_per_token_batches: 0.000004
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  # ── 深度思考 ────────────────────────────────────────────────────────────────
+  - model_name: qwen3-max-2026-01-23
+    litellm_params:
+      model: dashscope/qwen3-max-2026-01-23
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 极强思考能力，支持 Responses API
+      max_input_tokens: 262144
+      max_output_tokens: 65536
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.00001
+      input_cost_per_token_batches: 0.00000125
+      output_cost_per_token_batches: 0.000005
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_parallel_function_calling: true
+
+  # ── 文本生成 ────────────────────────────────────────────────────────────────
+  - model_name: deepseek-v4-pro
+    litellm_params:
+      model: dashscope/deepseek-v4-pro
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 性能比肩顶级闭源模型（百炼主 / Azure 备）
+      max_input_tokens: 131072
+      max_output_tokens: 8192
+      input_cost_per_token: 0.000012
+      output_cost_per_token: 0.000024
+      supports_function_calling: true
+      supports_reasoning: true
+
+  - model_name: qwen3.6-flash
+    litellm_params:
+      model: dashscope/qwen3.6-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 更高效率，更低成本
+      max_input_tokens: 1048576
+      max_output_tokens: 65536
+      input_cost_per_token: 0.0000012
+      output_cost_per_token: 0.0000072
+      input_cost_per_token_batches: 0.0000006
+      output_cost_per_token_batches: 0.0000036
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: deepseek-v4-flash
+    litellm_params:
+      model: dashscope/deepseek-v4-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 快捷高效的经济之选（百炼主 / Azure 备）
+      max_input_tokens: 131072
+      max_output_tokens: 8192
+      input_cost_per_token: 0.000001
+      output_cost_per_token: 0.000002
+      supports_function_calling: true
+      supports_reasoning: true
+
+  # ── 视觉理解 ────────────────────────────────────────────────────────────────
+  - model_name: qwen3-vl-plus
+    litellm_params:
+      model: dashscope/qwen3-vl-plus
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 视觉智能体业界领先
+      max_input_tokens: 262144
+      max_output_tokens: 32768
+      input_cost_per_token: 0.000001
+      output_cost_per_token: 0.00001
+      input_cost_per_token_batches: 0.0000005
+      output_cost_per_token_batches: 0.000005
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_parallel_function_calling: true
+
+  - model_name: qwen3-vl-flash
+    litellm_params:
+      model: dashscope/qwen3-vl-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 响应快，性价比高
+      max_input_tokens: 262144
+      max_output_tokens: 32768
+      input_cost_per_token: 0.00000015
+      output_cost_per_token: 0.0000015
+      input_cost_per_token_batches: 0.000000075
+      output_cost_per_token_batches: 0.00000075
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_parallel_function_calling: true
+
+  # ── 图片生成 ────────────────────────────────────────────────────────────────
+  - model_name: wan2.7-image-pro
+    litellm_params:
+      model: dashscope/wan2.7-image-pro
+      api_key: os.environ/DASHSCOPE_API_KEY
+      api_base: os.environ/DASHSCOPE_API_BASE_IMAGE
+    model_info:
+      mode: image_generation
+      description: 复杂指令遵循和一致性全面提升，支持4K输出
+      output_cost_per_image: 0.50
+
+  - model_name: qwen-image-2.0
+    litellm_params:
+      model: dashscope/qwen-image-2.0
+      api_key: os.environ/DASHSCOPE_API_KEY
+      api_base: os.environ/DASHSCOPE_API_BASE_IMAGE
+    model_info:
+      mode: image_generation
+      description: 融合图片生成与编辑，更快更强
+      output_cost_per_image: 0.20
+
+  - model_name: z-image-turbo
+    litellm_params:
+      model: dashscope/z-image-turbo
+      api_key: os.environ/DASHSCOPE_API_KEY
+      api_base: os.environ/DASHSCOPE_API_BASE_IMAGE
+    model_info:
+      mode: image_generation
+      description: 高性价比，照片级品质（默认 0.1 元/张，开启 prompt_extend 为 0.2 元/张）
+      output_cost_per_image: 0.10
+
+  # ── 视频生成 ────────────────────────────────────────────────────────────────
+  - model_name: happyhorse-1.1-t2v
+    litellm_params:
+      model: dashscope/happyhorse-1.1-t2v
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 动态·质感·音频全面升级（720P 0.9元/秒，1080P 1.2元/秒）
+      output_cost_per_second: 0.9
+
+  - model_name: wan2.7-i2v-2026-04-25
+    litellm_params:
+      model: dashscope/wan2.7-i2v-2026-04-25
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 情绪动作表现升级，运镜丝滑呈现（720P 0.6元/秒，1080P 1元/秒）
+      output_cost_per_second: 0.6
+
+  - model_name: wan2.7-videoedit
+    litellm_params:
+      model: dashscope/wan2.7-videoedit
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 指令编辑与创意复刻（720P 0.6元/秒，1080P 1元/秒）
+      output_cost_per_second: 0.6
+
+  # ── 语音模型 ────────────────────────────────────────────────────────────────
+  - model_name: qwen3-tts-flash
+    litellm_params:
+      model: dashscope/qwen3-tts-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 高表现力多语言拟人音色
+      input_cost_per_character: 0.00008
+      supports_audio_output: true
+
+  - model_name: qwen3-asr-flash
+    litellm_params:
+      model: dashscope/qwen3-asr-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 精准多语言转写与情绪识别
+      input_cost_per_second: 0.00022
+      supports_audio_input: true
+
+  - model_name: fun-asr
+    litellm_params:
+      model: dashscope/fun-asr
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 高准确率多语言自由说与方言识别
+      input_cost_per_second: 0.00022
+      supports_audio_input: true
+
+  # ── 向量化 / 重排序（RAG） ──────────────────────────────────────────────────
+  - model_name: text-embedding-v4
+    litellm_params:
+      model: dashscope/text-embedding-v4
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: embedding
+      description: Qwen3-Embedding 旗舰文本向量，支持 64~2048 维、稀疏向量、instruct
+      max_input_tokens: 8192
+      input_cost_per_token: 0.0000005
+      input_cost_per_token_batches: 0.00000025
+
+  - model_name: qwen3-rerank
+    litellm_params:
+      model: dashscope/qwen3-rerank
+      api_key: os.environ/DASHSCOPE_API_KEY
+      api_base: os.environ/DASHSCOPE_API_BASE_RERANK
+    model_info:
+      mode: rerank
+      description: 文本语义重排序，100+ 语言，最多 500 文档，RAG 精排首选
+      max_input_tokens: 4000
+      input_cost_per_token: 0.0000005
+
+  # ── 全模态（Omni） ──────────────────────────────────────────────────────────
+  - model_name: qwen3.5-omni-plus
+    litellm_params:
+      model: dashscope/qwen3.5-omni-plus
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 旗舰全模态，文本/图片/音频/视频输入，文本/音频输出，256K 上下文
+      max_input_tokens: 262144
+      max_output_tokens: 65536
+      input_cost_per_token: 0.000007
+      output_cost_per_token: 0.000053
+      input_cost_per_audio_token: 0.00004
+      output_cost_per_audio_token: 0.000213
+      supports_vision: true
+      supports_audio_input: true
+      supports_audio_output: true
+      supports_function_calling: true
+      supports_web_search: true
+
+  - model_name: qwen3.5-omni-flash
+    litellm_params:
+      model: dashscope/qwen3.5-omni-flash
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 轻量全模态，文本/图片/音频/视频输入，文本/音频输出，256K 上下文
+      max_input_tokens: 262144
+      max_output_tokens: 65536
+      input_cost_per_token: 0.0000022
+      output_cost_per_token: 0.000018
+      input_cost_per_audio_token: 0.0000133
+      output_cost_per_audio_token: 0.000072
+      supports_vision: true
+      supports_audio_input: true
+      supports_audio_output: true
+      supports_function_calling: true
+      supports_web_search: true
+
+  # ── Azure AI Foundry 文本（主）/ OpenAI（备） ───────────────────────────────
+  - model_name: gpt-5.4
+    litellm_params:
+      model: azure_ai/gpt-5.4
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: 高性价比旗舰，1M 上下文（Azure 主 / OpenAI 备）
+      max_input_tokens: 1050000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.000015
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5.4-mini
+    litellm_params:
+      model: azure_ai/gpt-5.4-mini
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: 快速轻量，400K 上下文（Azure 主 / OpenAI 备）
+      max_input_tokens: 272000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.00000075
+      output_cost_per_token: 0.0000045
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5.4-nano
+    litellm_params:
+      model: azure_ai/gpt-5.4-nano
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: 超低成本，适合分类/路由（Azure 主 / OpenAI 备）
+      max_input_tokens: 272000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.0000002
+      output_cost_per_token: 0.00000125
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5-mini
+    litellm_params:
+      model: azure_ai/gpt-5-mini
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: GPT-5 系列轻量版（Azure 主 / OpenAI 备）
+      max_input_tokens: 272000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.00000025
+      output_cost_per_token: 0.000002
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5-nano
+    litellm_params:
+      model: azure_ai/gpt-5-nano
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: GPT-5 系列超轻版（Azure 主 / OpenAI 备）
+      max_input_tokens: 272000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.00000005
+      output_cost_per_token: 0.0000004
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-4o
+    litellm_params:
+      model: azure_ai/gpt-4o
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: 成熟多模态，稳定可靠（Azure 主 / OpenAI 备）
+      max_input_tokens: 128000
+      max_output_tokens: 16384
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.00001
+      supports_vision: true
+      supports_function_calling: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-4o-mini
+    litellm_params:
+      model: azure_ai/gpt-4o-mini
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: 经典经济款多模态（Azure 主 / OpenAI 备）
+      max_input_tokens: 128000
+      max_output_tokens: 16384
+      input_cost_per_token: 0.00000015
+      output_cost_per_token: 0.0000006
+      supports_vision: true
+      supports_function_calling: true
+      supports_parallel_function_calling: true
+
+  # ── OpenAI 直连（仅 Azure 未部署的模型） ────────────────────────────────────
+  - model_name: gpt-5.5
+    litellm_params:
+      model: openai/gpt-5.5
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: OpenAI 最新旗舰，Agent/编码/复杂推理
+      max_input_tokens: 1050000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.000005
+      output_cost_per_token: 0.00003
+      input_cost_per_token_batches: 0.0000025
+      output_cost_per_token_batches: 0.000015
+      cache_read_input_token_cost: 0.0000005
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: o4-mini
+    litellm_params:
+      model: openai/o4-mini
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: o 系列推理模型，200K 上下文
+      max_input_tokens: 200000
+      max_output_tokens: 100000
+      input_cost_per_token: 0.0000011
+      output_cost_per_token: 0.0000044
+      cache_read_input_token_cost: 0.000000275
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+
+  # ── Azure AI Foundry 独有 ───────────────────────────────────────────────────
+  - model_name: grok-4.3
+    litellm_params:
+      model: azure_ai/grok-4.3
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: Azure Foundry · xAI Grok 4.3
+      supports_function_calling: true
+      supports_reasoning: true
+
+  - model_name: Kimi-K2.6
+    litellm_params:
+      model: azure_ai/Kimi-K2.6
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: Azure Foundry · Moonshot Kimi K2.6
+      supports_vision: true
+      supports_function_calling: true
+
+  # ── Azure / OpenAI 向量（Azure 主 / OpenAI 备） ─────────────────────────────
+  - model_name: text-embedding-3-large
+    litellm_params:
+      model: azure_ai/text-embedding-3-large
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+    model_info:
+      mode: embedding
+      description: 3072 维，精度最高（Azure 主 / OpenAI 备）
+      max_input_tokens: 8191
+      input_cost_per_token: 0.00000013
+
+  - model_name: text-embedding-3-small
+    litellm_params:
+      model: azure_ai/text-embedding-3-small
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+    model_info:
+      mode: embedding
+      description: 1536 维，性价比最高（Azure 主 / OpenAI 备）
+      max_input_tokens: 8191
+      input_cost_per_token: 0.00000002
+
+  - model_name: text-embedding-ada-002
+    litellm_params:
+      model: azure_ai/text-embedding-ada-002
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+    model_info:
+      mode: embedding
+      description: Azure Foundry · 经典 1536 维向量
+      max_input_tokens: 8191
+      input_cost_per_token: 0.0000001
+
+  # ── OpenAI 向量（fallback 通道，勿直接调用） ─────────────────────────────────
+  - model_name: text-embedding-3-large-openai-fallback
+    litellm_params:
+      model: openai/text-embedding-3-large
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: embedding
+      description: "[fallback] OpenAI text-embedding-3-large"
+      max_input_tokens: 8191
+
+  - model_name: text-embedding-3-small-openai-fallback
+    litellm_params:
+      model: openai/text-embedding-3-small
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: embedding
+      description: "[fallback] OpenAI text-embedding-3-small"
+      max_input_tokens: 8191
+
+  # ── OpenAI 图片 ─────────────────────────────────────────────────────────────
+  - model_name: gpt-image-2
+    litellm_params:
+      model: openai/gpt-image-2
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: image_generation
+      description: 最新 SOTA 图片生成与编辑
+      input_cost_per_token: 0.000005
+      output_cost_per_token: 0.00001
+      input_cost_per_image_token: 0.000008
+      output_cost_per_image_token: 0.00003
+      supports_vision: true
+
+  - model_name: gpt-image-1.5
+    litellm_params:
+      model: openai/gpt-image-1.5
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: image_generation
+      description: 高质量图片生成，稳定可用
+      input_cost_per_token: 0.000005
+      output_cost_per_token: 0.00001
+      input_cost_per_image_token: 0.000008
+      output_cost_per_image_token: 0.000032
+      supports_vision: true
+
+  - model_name: dall-e-3
+    litellm_params:
+      model: openai/dall-e-3
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: image_generation
+      description: 经典 DALL·E 3，按张计费（标准 1024 约 $0.04/张）
+      output_cost_per_image: 0.04
+
+  # ── OpenAI 语音合成 ─────────────────────────────────────────────────────────
+  - model_name: gpt-4o-mini-tts
+    litellm_params:
+      model: openai/gpt-4o-mini-tts
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_speech
+      description: 新一代 TTS，音质更好
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.00001
+      output_cost_per_audio_token: 0.000012
+      supports_audio_output: true
+
+  - model_name: tts-1-hd
+    litellm_params:
+      model: openai/tts-1-hd
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_speech
+      description: 高清 TTS，$30/百万字符
+      input_cost_per_character: 0.00003
+      supports_audio_output: true
+
+  - model_name: tts-1
+    litellm_params:
+      model: openai/tts-1
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_speech
+      description: 标准 TTS，$15/百万字符
+      input_cost_per_character: 0.000015
+      supports_audio_output: true
+
+  # ── OpenAI 语音识别 ─────────────────────────────────────────────────────────
+  - model_name: gpt-4o-transcribe
+    litellm_params:
+      model: openai/gpt-4o-transcribe
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_transcription
+      description: 新一代 ASR，准确率高
+      max_input_tokens: 16000
+      max_output_tokens: 2000
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.00001
+      supports_audio_input: true
+
+  - model_name: gpt-4o-mini-transcribe
+    litellm_params:
+      model: openai/gpt-4o-mini-transcribe
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_transcription
+      description: 轻量 ASR，成本更低
+      max_input_tokens: 16000
+      max_output_tokens: 2000
+      input_cost_per_token: 0.00000125
+      output_cost_per_token: 0.000005
+      supports_audio_input: true
+
+  - model_name: whisper-1
+    litellm_params:
+      model: openai/whisper-1
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: audio_transcription
+      description: 经典 Whisper，$0.006/分钟
+      input_cost_per_second: 0.0001
+      supports_audio_input: true
+
+  # ── Fallback 通道（由 router_settings.fallbacks 自动切换，勿直接调用） ─────
+  - model_name: gpt-5.4-openai-fallback
+    litellm_params:
+      model: openai/gpt-5.4
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-5.4"
+
+  - model_name: gpt-5.4-mini-openai-fallback
+    litellm_params:
+      model: openai/gpt-5.4-mini
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-5.4-mini"
+
+  - model_name: gpt-5.4-nano-openai-fallback
+    litellm_params:
+      model: openai/gpt-5.4-nano
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-5.4-nano"
+
+  - model_name: gpt-5-mini-openai-fallback
+    litellm_params:
+      model: openai/gpt-5-mini
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-5-mini"
+
+  - model_name: gpt-5-nano-openai-fallback
+    litellm_params:
+      model: openai/gpt-5-nano
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-5-nano"
+
+  - model_name: gpt-4o-openai-fallback
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-4o"
+
+  - model_name: gpt-4o-mini-openai-fallback
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+    model_info:
+      mode: chat
+      description: "[fallback] OpenAI gpt-4o-mini"
+
+  - model_name: deepseek-v4-pro-azure-fallback
+    litellm_params:
+      model: azure_ai/DeepSeek-V4-Pro
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: "[fallback] Azure DeepSeek-V4-Pro"
+
+  - model_name: deepseek-v4-flash-azure-fallback
+    litellm_params:
+      model: azure_ai/DeepSeek-V4-Flash
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: "[fallback] Azure DeepSeek-V4-Flash"
 
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
@@ -9,6 +728,23 @@ general_settings:
 environment_variables:
   UI_LOGO_PATH: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
   LITELLM_FAVICON_URL: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
+
+router_settings:
+  max_fallbacks: 3
+  fallbacks:
+    # 百炼主 → Azure 备
+    - deepseek-v4-pro: [deepseek-v4-pro-azure-fallback]
+    - deepseek-v4-flash: [deepseek-v4-flash-azure-fallback]
+    # Azure 主 → OpenAI 备
+    - gpt-5.4: [gpt-5.4-openai-fallback]
+    - gpt-5.4-mini: [gpt-5.4-mini-openai-fallback]
+    - gpt-5.4-nano: [gpt-5.4-nano-openai-fallback]
+    - gpt-5-mini: [gpt-5-mini-openai-fallback]
+    - gpt-5-nano: [gpt-5-nano-openai-fallback]
+    - gpt-4o: [gpt-4o-openai-fallback]
+    - gpt-4o-mini: [gpt-4o-mini-openai-fallback]
+    - text-embedding-3-large: [text-embedding-3-large-openai-fallback]
+    - text-embedding-3-small: [text-embedding-3-small-openai-fallback]
 
 litellm_settings:
   drop_params: true
