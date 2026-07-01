@@ -21,6 +21,10 @@ services:
       STORE_MODEL_IN_DB: "True"
       STORE_PROMPTS_IN_SPEND_LOGS: "True"
       LITELLM_UI_PATH: /app/litellm/proxy/_experimental/out
+      # 关闭对外暴露的 API 文档（Swagger "/"、ReDoc "/redoc"、OpenAPI "/openapi.json"）
+      NO_DOCS: "True"
+      NO_REDOC: "True"
+      NO_OPENAPI: "True"
     command:
       - "--config"
       - "/app/config.yaml"

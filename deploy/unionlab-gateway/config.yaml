@@ -101,6 +101,33 @@ model_list:
       supports_function_calling: true
       supports_reasoning: true
 
+  # ── 私有自托管（vLLM） ──────────────────────────────────────────────────────
+  - model_name: qwen3-30b-a3b
+    litellm_params:
+      model: hosted_vllm//models/Qwen/Qwen3-30B-A3B-Instruct-2507
+      api_base: http://123.56.168.189:8200/v1
+      api_key: "dummy"          # vLLM 若未开 --api-key，此处填任意非空值即可
+    model_info:
+      mode: chat
+      description: 私有 vLLM 部署 · Qwen3-30B-A3B-Instruct-2507
+      max_input_tokens: 32768
+      max_output_tokens: 8192
+      supports_function_calling: true
+      supports_reasoning: true
+
+  - model_name: qwen3-32b-gptq-int4
+    litellm_params:
+      model: hosted_vllm/qwen3-32b-gptq-int4
+      api_base: http://119.45.226.147:8000/v1
+      api_key: os.environ/VLLM_QWEN3_32B_API_KEY
+    model_info:
+      mode: chat
+      description: 私有 vLLM 部署 · Qwen3-32B GPTQ-Int4 量化
+      max_input_tokens: 8192
+      max_output_tokens: 4096
+      supports_function_calling: true
+      supports_reasoning: true
+
   # ── 视觉理解 ────────────────────────────────────────────────────────────────
   - model_name: qwen3-vl-plus
     litellm_params:
@@ -719,6 +746,12 @@ model_list:
       mode: chat
       description: "[fallback] Azure DeepSeek-V4-Flash"
 
+search_tools:
+  - search_tool_name: "unionlab-tavily"
+    litellm_params:
+      search_provider: "tavily"
+      api_key: os.environ/TAVILY_API_KEY
+
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
   hide_default_credentials_hint: true
@@ -749,6 +782,10 @@ router_settings:
 litellm_settings:
   drop_params: true
   set_verbose: false
+  callbacks: ["websearch_interception"]
+  websearch_interception_params:
+    enabled_providers: ["azure_ai"]
+    search_tool_name: "unionlab-tavily"
   ui_theme_config:
     logo_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png
     favicon_url: https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png

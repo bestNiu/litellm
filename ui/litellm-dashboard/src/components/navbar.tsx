@@ -86,7 +86,7 @@ const Navbar: React.FC<NavbarProps> = ({
                   </div>
                 </div>
               </Link>
-              {version && (
+              {version && !hideUpstreamUiExtras && (
                 <div className="relative">
                   {!disableBouncingIcon && (
                     <span

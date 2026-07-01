@@ -244,8 +244,9 @@ describe("Navbar", () => {
     mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: false });
   });
 
-  it("should hide docs, blog, community links, and notifications when hideUpstreamUiExtras is enabled", () => {
+  it("should hide docs, blog, community links, notifications, and version badge when hideUpstreamUiExtras is enabled", () => {
     mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: true });
+    mockUseHealthReadinessDetailsImpl = () => ({ data: { litellm_version: "1.0.0" } });
 
     renderWithProviders(<Navbar {...defaultProps} />);
 
@@ -253,9 +254,11 @@ describe("Navbar", () => {
     expect(screen.queryByTestId("blog-dropdown")).not.toBeInTheDocument();
     expect(screen.queryByTestId("community-engagement-buttons")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /^notifications$/i })).not.toBeInTheDocument();
+    expect(screen.queryByText("v1.0.0")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /open account menu/i })).toBeInTheDocument();
 
     mockUseThemeImpl = () => ({ logoUrl: null, hideUpstreamUiExtras: false });
+    mockUseHealthReadinessDetailsImpl = () => ({ data: null });
   });
 
   it("should hide user dropdown and notifications on public pages", () => {

@@ -57,7 +57,9 @@ cp .env.example .env
 
 按需修改 `config.yaml`（Logo、主题、模型列表等）。`master_key` 从环境变量 `LITELLM_MASTER_KEY` 读取，无需在文件中硬编码。
 
-`litellm_settings.ui_theme_config.hide_upstream_ui_extras: true` 可隐藏顶部 **Docs / Blog / Slack / GitHub** 链接、右上角 **通知铃铛**，以及用户菜单中的 **Hide New Feature Indicators** 等偏好开关（UnionLab 默认已开启）。
+`litellm_settings.ui_theme_config.hide_upstream_ui_extras: true` 可隐藏顶部 **Docs / Blog / Slack / GitHub** 链接、右上角 **通知铃铛**、Logo 旁的 **版本号标识（v1.x.x）**，以及用户菜单中的 **Hide New Feature Indicators** 等偏好开关（UnionLab 默认已开启）。
+
+`docker-compose*.yml` 中已设置 `NO_DOCS`、`NO_REDOC`、`NO_OPENAPI` 为 `True`，关闭对外暴露的 API 文档页面（Swagger `/`、ReDoc `/redoc`、OpenAPI `/openapi.json`），避免公网直接访问。这三项必须作为容器环境变量设置（FastAPI 在加载 `config.yaml` 之前就已读取），不能写在 `config.yaml` 的 `environment_variables` 中。
 
 ### 3. 选择部署方式并启动
 
