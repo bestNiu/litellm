@@ -16527,9 +16527,102 @@ async def get_anthropic_beta_headers_reload_status(
         )
 
 
-@router.get("/", dependencies=[Depends(user_api_key_auth)])
+@router.get("/")
 async def home(request: Request):
-    return "LiteLLM: RUNNING"
+    from fastapi.responses import HTMLResponse
+
+    base_url = str(request.base_url).rstrip("/")
+    html = """<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UnionLab AI Gateway</title>
+<link rel="icon" href="https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png" />
+<style>
+  :root { color-scheme: light dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 45%, #0b3a5b 100%);
+    color: #e2e8f0;
+    padding: 24px;
+  }
+  .card {
+    width: 100%;
+    max-width: 720px;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 18px;
+    padding: 40px 44px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+  }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { width: 52px; height: 52px; border-radius: 12px; }
+  .brand h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 0.2px; }
+  .status {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 4px; font-size: 13px; color: #4ade80;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
+  p.sub { color: #94a3b8; line-height: 1.7; margin: 20px 0 24px; font-size: 15px; }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .row {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.12);
+    border-radius: 10px; padding: 12px 16px; font-size: 14px;
+  }
+  .row .k { color: #94a3b8; }
+  .row .v { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #e2e8f0; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  .hint { margin-top: 24px; font-size: 13px; color: #94a3b8; line-height: 1.8; }
+  .hint b { color: #cbd5e1; }
+  a { color: #38bdf8; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .footer { margin-top: 28px; font-size: 12px; color: #64748b; text-align: center; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">
+      <img src="https://unionlab-static.oss-cn-hangzhou.aliyuncs.com/public/llm/union-ai.png" alt="logo" />
+      <div>
+        <h1>UnionLab AI Gateway</h1>
+        <div class="status"><span class="dot"></span> 服务运行中 · Running</div>
+      </div>
+    </div>
+
+    <p class="sub">
+      有临医药 · 统一 AI 调度中心。兼容 OpenAI API 协议的大模型网关，集中管理模型接入、路由调度、权限管控与成本治理。
+    </p>
+
+    <div class="grid">
+      <div class="row"><span class="k">Base URL</span><span class="v">__BASE_URL__</span></div>
+      <div class="row"><span class="k">鉴权方式</span><span class="v">Authorization: Bearer &lt;API_KEY&gt;</span></div>
+      <div class="row"><span class="k">协议兼容</span><span class="v">OpenAI Chat / Embeddings / Images / Audio / Rerank</span></div>
+    </div>
+
+    <div class="hint">
+      这是一个 <b>API 网关</b>，请通过接口进行调用，而非直接访问本页。<br />
+      · 查询可用模型：<code>GET __BASE_URL__/v1/models</code><br />
+      · 文本对话：<code>POST __BASE_URL__/v1/chat/completions</code><br />
+      · 管理后台：<a href="/ui">__BASE_URL__/ui</a><br />
+      · 详细用法请参阅《UnionLab Gateway 模型接口调用文档》。
+    </div>
+
+    <div class="footer">© 有临医药 UnionLab · Powered by UnionLab AI Gateway</div>
+  </div>
+</body>
+</html>"""
+    html = html.replace("__BASE_URL__", base_url)
+    return HTMLResponse(content=html)
 
 
 @router.get(
