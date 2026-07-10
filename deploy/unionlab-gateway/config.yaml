@@ -413,6 +413,63 @@ model_list:
       supports_web_search: true
       supports_parallel_function_calling: true
 
+  - model_name: gpt-5.6-sol
+    litellm_params:
+      model: azure_ai/gpt-5.6-sol
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: Azure Foundry · GPT-5.6 旗舰，复杂推理/多智能体/科学任务
+      max_input_tokens: 1050000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.000005
+      output_cost_per_token: 0.00003
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5.6-terra
+    litellm_params:
+      model: azure_ai/gpt-5.6-terra
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: Azure Foundry · GPT-5.6 均衡版，性能对标 GPT-5.5，成本减半
+      max_input_tokens: 1050000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.0000025
+      output_cost_per_token: 0.000015
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
+  - model_name: gpt-5.6-luna
+    litellm_params:
+      model: azure_ai/gpt-5.6-luna
+      api_base: os.environ/AZURE_AI_API_BASE
+      api_key: os.environ/AZURE_AI_API_KEY
+      api_version: "2024-05-01-preview"
+    model_info:
+      mode: chat
+      description: Azure Foundry · GPT-5.6 轻量版，高吞吐低成本，适合分类/路由
+      max_input_tokens: 1050000
+      max_output_tokens: 128000
+      input_cost_per_token: 0.000001
+      output_cost_per_token: 0.000006
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
   - model_name: gpt-4o
     litellm_params:
       model: azure_ai/gpt-4o

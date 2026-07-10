@@ -7,13 +7,15 @@
 
 ## 一、接入信息
 
-| 项目 | 值 |
-|------|------|
-| Base URL | `http://ai-gateway.union-laboratory.com` |
-| 鉴权方式 | HTTP Header：`Authorization: Bearer <API_KEY>` |
-| API_KEY | 使用网关下发的 Key（`sk-...`），本文示例统一写作 `$API_KEY` |
-| 内容类型 | `Content-Type: application/json`（图片/音频上传除外） |
-| 兼容协议 | OpenAI Chat Completions / Embeddings / Images / Audio / Rerank |
+
+| 项目       | 值                                                              |
+| -------- | -------------------------------------------------------------- |
+| Base URL | `https://ai-gateway.union-laboratory.com`                      |
+| 鉴权方式     | HTTP Header：`Authorization: Bearer <API_KEY>`                  |
+| API_KEY  | 使用网关下发的 Key（`sk-...`），本文示例统一写作 `$API_KEY`                      |
+| 内容类型     | `Content-Type: application/json`（图片/音频上传除外）                    |
+| 兼容协议     | OpenAI Chat Completions / Embeddings / Images / Audio / Rerank |
+
 
 > **安全提示**：请勿在客户端代码或公开仓库中硬编码 Key，建议通过环境变量注入。
 
@@ -25,7 +27,7 @@
 from openai import OpenAI
 
 client = OpenAI(
-    base_url="http://ai-gateway.union-laboratory.com",
+    base_url="https://ai-gateway.union-laboratory.com",
     api_key="sk-你的Key",
 )
 ```
@@ -34,8 +36,10 @@ client = OpenAI(
 
 ```bash
 export API_KEY="sk-你的Key"
-export BASE_URL="http://ai-gateway.union-laboratory.com"
+export BASE_URL="https://ai-gateway.union-laboratory.com"
 ```
+
+
 
 ### 查询可用模型
 
@@ -46,26 +50,32 @@ curl $BASE_URL/v1/models \
 
 ---
 
+
+
 ## 二、模型能力总览
 
-| 能力类别 | 接口路径 | mode | 代表模型 |
-|----------|----------|------|----------|
-| 文本对话 / 智能体 | `/v1/chat/completions` | chat | `qwen3.7-max`、`deepseek-v4-pro`、`gpt-5.5`、`gpt-5.4` |
-| 深度推理（思考） | `/v1/chat/completions` | chat | `qwen3-max-2026-01-23`、`o4-mini`、`grok-4.3` |
-| 视觉理解（图生文） | `/v1/chat/completions` | chat（vision） | `qwen3-vl-plus`、`gpt-4o`、`qwen3.7-plus` |
-| 联网搜索 | `/v1/chat/completions` | chat（web_search） | `qwen3.6-flash`、`gpt-5.4`、`qwen3.5-omni-plus` |
-| 全模态（文/图/音/视频输入） | `/v1/chat/completions` | chat（omni） | `qwen3.5-omni-plus`、`qwen3.5-omni-flash` |
-| 图片生成 | `/v1/images/generations` | image_generation | `qwen-image-2.0`、`wan2.7-image-pro`、`gpt-image-2` |
-| 语音合成 TTS | `/v1/audio/speech` | audio_speech | `gpt-4o-mini-tts`、`tts-1-hd` |
-| 语音识别 ASR | `/v1/audio/transcriptions` | audio_transcription | `gpt-4o-transcribe`、`whisper-1` |
-| 文本向量化 Embedding | `/v1/embeddings` | embedding | `text-embedding-v4`、`text-embedding-3-large` |
-| 语义重排序 Rerank | `/v1/rerank` | rerank | `qwen3-rerank` |
-| 视频生成 | `/v1/chat/completions` | chat（异步） | `wan2.7-i2v-2026-04-25`、`happyhorse-1.1-t2v` |
+
+| 能力类别            | 接口路径                       | mode                | 代表模型                                                |
+| --------------- | -------------------------- | ------------------- | --------------------------------------------------- |
+| 文本对话 / 智能体      | `/v1/chat/completions`     | chat                | `qwen3.7-max`、`deepseek-v4-pro`、`gpt-5.5`、`gpt-5.4` |
+| 深度推理（思考）        | `/v1/chat/completions`     | chat                | `qwen3-max-2026-01-23`、`o4-mini`、`grok-4.3`         |
+| 视觉理解（图生文）       | `/v1/chat/completions`     | chat（vision）        | `qwen3-vl-plus`、`gpt-4o`、`qwen3.7-plus`             |
+| 联网搜索            | `/v1/chat/completions`     | chat（web_search）    | `qwen3.6-flash`、`gpt-5.4`、`qwen3.5-omni-plus`       |
+| 全模态（文/图/音/视频输入） | `/v1/chat/completions`     | chat（omni）          | `qwen3.5-omni-plus`、`qwen3.5-omni-flash`            |
+| 图片生成            | `/v1/images/generations`   | image_generation    | `qwen-image-2.0`、`wan2.7-image-pro`、`gpt-image-2`   |
+| 语音合成 TTS        | `/v1/audio/speech`         | audio_speech        | `gpt-4o-mini-tts`、`tts-1-hd`                        |
+| 语音识别 ASR        | `/v1/audio/transcriptions` | audio_transcription | `gpt-4o-transcribe`、`whisper-1`                     |
+| 文本向量化 Embedding | `/v1/embeddings`           | embedding           | `text-embedding-v4`、`text-embedding-3-large`        |
+| 语义重排序 Rerank    | `/v1/rerank`               | rerank              | `qwen3-rerank`                                      |
+| 视频生成            | `/v1/chat/completions`     | chat（异步）            | `wan2.7-i2v-2026-04-25`、`happyhorse-1.1-t2v`        |
+
 
 > **命名约定**：请始终使用上表中的 `model_name`（如 `qwen3.7-max`）作为 `model` 参数值。
 > 名称中带 `-fallback` 后缀的为自动容灾通道，**请勿直接调用**。
 
 ---
+
+
 
 ## 三、文本对话（Chat Completions）
 
@@ -102,6 +112,8 @@ resp = client.chat.completions.create(
 print(resp.choices[0].message.content)
 ```
 
+
+
 ### 3.2 流式输出（SSE）
 
 设置 `"stream": true`，服务端以 Server-Sent Events 逐块返回。
@@ -118,20 +130,26 @@ for chunk in stream:
         print(delta, end="", flush=True)
 ```
 
+
+
 ### 3.3 常用参数说明
 
-| 参数 | 类型 | 说明 |
-|------|------|------|
-| `model` | string | 模型名，必填 |
-| `messages` | array | 对话消息列表，必填 |
-| `temperature` | float | 采样温度 0~2，越大越发散 |
-| `top_p` | float | 核采样，与 temperature 二选一调节 |
-| `max_tokens` | int | 最大输出 token 数 |
-| `stream` | bool | 是否流式输出 |
-| `stop` | string/array | 停止词 |
-| `tools` / `tool_choice` | array/string | 函数调用（见第四节） |
+
+| 参数                      | 类型           | 说明                      |
+| ----------------------- | ------------ | ----------------------- |
+| `model`                 | string       | 模型名，必填                  |
+| `messages`              | array        | 对话消息列表，必填               |
+| `temperature`           | float        | 采样温度 0~2，越大越发散          |
+| `top_p`                 | float        | 核采样，与 temperature 二选一调节 |
+| `max_tokens`            | int          | 最大输出 token 数            |
+| `stream`                | bool         | 是否流式输出                  |
+| `stop`                  | string/array | 停止词                     |
+| `tools` / `tool_choice` | array/string | 函数调用（见第四节）              |
+
 
 ---
+
+
 
 ## 四、函数调用 / 工具调用（Function Calling）
 
@@ -183,6 +201,8 @@ print(final.choices[0].message.content)
 
 ---
 
+
+
 ## 五、深度推理（Reasoning / 思考）
 
 支持 `supports_reasoning` 的模型（如 `qwen3-max-2026-01-23`、`o4-mini`、`deepseek-v4-pro`）可开启思维链推理，适合数学、逻辑、复杂规划。
@@ -204,6 +224,8 @@ curl $BASE_URL/v1/chat/completions \
 - 部分模型会在响应中返回 `reasoning_content`（思考过程）字段，最终答案仍在 `content` 中。
 
 ---
+
+
 
 ## 六、视觉理解（图片输入 / 多模态对话）
 
@@ -239,6 +261,8 @@ image_url = {"url": f"data:image/jpeg;base64,{b64}"}
 
 ---
 
+
+
 ## 七、联网搜索（Web Search）
 
 支持 `supports_web_search` 的模型可实时检索互联网信息。网关已内置 Tavily 搜索工具，Azure 系列模型会自动拦截并注入搜索结果。
@@ -260,6 +284,8 @@ curl $BASE_URL/v1/chat/completions \
 - Azure 系（`gpt-5.4`、`gpt-4o` 等）由网关自动通过 Tavily 完成检索，无需额外配置搜索源。
 
 ---
+
+
 
 ## 八、全模态（Omni：文/图/音/视频输入，文/音输出）
 
@@ -284,17 +310,21 @@ print(resp.choices[0].message.content)
 
 ---
 
+
+
 ## 九、图片生成（Image Generation）
 
 接口路径 `/v1/images/generations`，`mode` 为 `image_generation`。
 
-| 模型 | 说明 |
-|------|------|
-| `qwen-image-2.0` | 融合生成与编辑，更快更强 |
-| `wan2.7-image-pro` | 复杂指令遵循强，支持 4K |
-| `z-image-turbo` | 高性价比，照片级 |
+
+| 模型                              | 说明                |
+| ------------------------------- | ----------------- |
+| `qwen-image-2.0`                | 融合生成与编辑，更快更强      |
+| `wan2.7-image-pro`              | 复杂指令遵循强，支持 4K     |
+| `z-image-turbo`                 | 高性价比，照片级          |
 | `gpt-image-2` / `gpt-image-1.5` | OpenAI SOTA 生成与编辑 |
-| `dall-e-3` | 经典 DALL·E 3 |
+| `dall-e-3`                      | 经典 DALL·E 3       |
+
 
 ```bash
 curl $BASE_URL/v1/images/generations \
@@ -321,6 +351,8 @@ print(img.data[0].url)  # 或 img.data[0].b64_json
 ```
 
 ---
+
+
 
 ## 十、语音合成（TTS）
 
@@ -353,6 +385,8 @@ resp.stream_to_file("speech.mp3")
 
 ---
 
+
+
 ## 十一、语音识别（ASR / Transcription）
 
 接口路径 `/v1/audio/transcriptions`，`mode` 为 `audio_transcription`。模型：`gpt-4o-transcribe`、`gpt-4o-mini-transcribe`、`whisper-1`。
@@ -379,15 +413,19 @@ print(resp.text)
 
 ---
 
+
+
 ## 十二、文本向量化（Embeddings）
 
 接口路径 `/v1/embeddings`，用于 RAG、语义检索、聚类。
 
-| 模型 | 维度 | 说明 |
-|------|------|------|
-| `text-embedding-v4` | 64~2048（可配置） | Qwen3 旗舰，支持稀疏向量、instruct |
-| `text-embedding-3-large` | 3072 | 精度最高 |
-| `text-embedding-3-small` | 1536 | 性价比最高 |
+
+| 模型                       | 维度           | 说明                       |
+| ------------------------ | ------------ | ------------------------ |
+| `text-embedding-v4`      | 64~2048（可配置） | Qwen3 旗舰，支持稀疏向量、instruct |
+| `text-embedding-3-large` | 3072         | 精度最高                     |
+| `text-embedding-3-small` | 1536         | 性价比最高                    |
+
 
 ```bash
 curl $BASE_URL/v1/embeddings \
@@ -410,6 +448,8 @@ print(len(resp.data[0].embedding))  # 向量维度
 ```
 
 ---
+
+
 
 ## 十三、语义重排序（Rerank）
 
@@ -435,6 +475,8 @@ curl $BASE_URL/v1/rerank \
 
 ---
 
+
+
 ## 十四、视频生成
 
 阿里视频模型（`wan2.7-i2v-2026-04-25` 图生视频、`happyhorse-1.1-t2v` 文生视频、`wan2.7-videoedit` 视频编辑）在网关中以 chat 模式接入，通常为**异步任务**：提交请求后返回任务 ID，轮询获取结果视频 URL。
@@ -455,17 +497,25 @@ curl $BASE_URL/v1/chat/completions \
 
 ---
 
+
+
 ## 十五、错误码与容灾
+
+
 
 ### 常见 HTTP 状态码
 
-| 状态码 | 含义 | 处理建议 |
-|--------|------|----------|
-| `401` | 鉴权失败 | 检查 `Authorization` Header 与 Key |
-| `404` | 模型不存在 | 核对 `model` 名称是否在模型列表中 |
-| `429` | 触发限流 | 退避重试（指数退避） |
-| `400` | 参数错误 | 检查请求体 JSON 结构与必填字段 |
-| `500/503` | 上游异常 | 网关会自动切换 fallback，可稍后重试 |
+
+| 状态码       | 含义    | 处理建议                            |
+| --------- | ----- | ------------------------------- |
+| `401`     | 鉴权失败  | 检查 `Authorization` Header 与 Key |
+| `404`     | 模型不存在 | 核对 `model` 名称是否在模型列表中           |
+| `429`     | 触发限流  | 退避重试（指数退避）                      |
+| `400`     | 参数错误  | 检查请求体 JSON 结构与必填字段              |
+| `500/503` | 上游异常  | 网关会自动切换 fallback，可稍后重试          |
+
+
+
 
 ### 自动容灾（Fallback）
 
@@ -479,22 +529,27 @@ curl $BASE_URL/v1/chat/completions \
 
 ---
 
+
+
 ## 十六、模型选型速查
 
-| 场景 | 推荐模型 |
-|------|----------|
-| 通用旗舰 / 智能体 | `qwen3.7-max`、`gpt-5.5`、`gpt-5.4` |
-| 高性价比日常对话 | `qwen3.6-flash`、`gpt-5.4-mini`、`deepseek-v4-flash` |
-| 复杂推理 / 数学 | `qwen3-max-2026-01-23`、`o4-mini` |
-| 图片理解 | `qwen3-vl-plus`、`gpt-4o` |
-| 全模态交互 | `qwen3.5-omni-plus` |
-| 图片生成 | `qwen-image-2.0`、`gpt-image-2` |
-| RAG 向量化 | `text-embedding-v4` |
-| RAG 精排 | `qwen3-rerank` |
-| 语音合成 | `gpt-4o-mini-tts` |
-| 语音识别 | `gpt-4o-transcribe` |
-| 私有化部署 | `qwen3-30b-a3b`、`qwen3-32b-gptq-int4` |
+
+| 场景         | 推荐模型                                               |
+| ---------- | -------------------------------------------------- |
+| 通用旗舰 / 智能体 | `qwen3.7-max`、`gpt-5.5`、`gpt-5.4`                  |
+| 高性价比日常对话   | `qwen3.6-flash`、`gpt-5.4-mini`、`deepseek-v4-flash` |
+| 复杂推理 / 数学  | `qwen3-max-2026-01-23`、`o4-mini`                   |
+| 图片理解       | `qwen3-vl-plus`、`gpt-4o`                           |
+| 全模态交互      | `qwen3.5-omni-plus`                                |
+| 图片生成       | `qwen-image-2.0`、`gpt-image-2`                     |
+| RAG 向量化    | `text-embedding-v4`                                |
+| RAG 精排     | `qwen3-rerank`                                     |
+| 语音合成       | `gpt-4o-mini-tts`                                  |
+| 语音识别       | `gpt-4o-transcribe`                                |
+| 私有化部署      | `qwen3-30b-a3b`、`qwen3-32b-gptq-int4`              |
+
 
 ---
 
-> 更多协议细节参考 OpenAI 官方 API 文档及 LiteLLM 文档：https://docs.litellm.ai/
+> 更多协议细节参考 OpenAI 官方 API 文档及 LiteLLM 文档：[https://docs.litellm.ai/](https://docs.litellm.ai/)
+
