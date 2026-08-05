@@ -1,5 +1,22 @@
 model_list:
   # ── 智能体基座 ──────────────────────────────────────────────────────────────
+  - model_name: qwen3.8-max
+    litellm_params:
+      model: dashscope/qwen3.8-max
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: 2.4T MoE 旗舰，编程与办公全面跃升，原生视觉理解
+      max_input_tokens: 1048576
+      max_output_tokens: 131072
+      input_cost_per_token: 0.000012
+      output_cost_per_token: 0.000036
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_web_search: true
+      supports_parallel_function_calling: true
+
   - model_name: qwen3.7-max
     litellm_params:
       model: dashscope/qwen3.7-max
@@ -96,6 +113,20 @@ model_list:
       description: 快捷高效的经济之选（百炼主 / Azure 备）
       max_input_tokens: 131072
       max_output_tokens: 8192
+      input_cost_per_token: 0.000001
+      output_cost_per_token: 0.000002
+      supports_function_calling: true
+      supports_reasoning: true
+
+  - model_name: deepseek-v4-flash-0731
+    litellm_params:
+      model: dashscope/deepseek-v4-flash-0731
+      api_key: os.environ/DASHSCOPE_API_KEY
+    model_info:
+      mode: chat
+      description: DeepSeek-V4-Flash 正式版（2026-07-31），推荐稳定版本
+      max_input_tokens: 1048576
+      max_output_tokens: 393216
       input_cost_per_token: 0.000001
       output_cost_per_token: 0.000002
       supports_function_calling: true
