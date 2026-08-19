@@ -1,5 +1,9 @@
 # 从源码全新构建部署（使用外部 RDS，不启动本地 Postgres）
-# 用法: docker compose -f docker-compose.build.yml up -d --build
+# 用法: ./reload.sh --build
+# 或:   docker compose -f docker-compose.build.yml up -d --build
+#
+# 不要用 `docker compose restart`：它只重启进程，不会重建容器，
+# 也不会重新挂载 custom-ui / 重新加载 .env。
 
 services:
   unionlab-gateway:
@@ -13,14 +17,16 @@ services:
     network_mode: host
     volumes:
       - ./config.yaml:/app/config.yaml:ro
-      - ./custom-ui:/app/litellm/proxy/_experimental/out:ro
+      # 独立运行时路径，不要覆盖 site-packages 里的 packaged UI。
+      # custom-ui 为空或不完整时，LiteLLM 会回退到镜像内的 UnionLab UI。
+      - ./custom-ui:/var/lib/litellm/ui:ro
     env_file:
       - .env
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:5432/${POSTGRES_DB}
       STORE_MODEL_IN_DB: "True"
       STORE_PROMPTS_IN_SPEND_LOGS: "True"
-      LITELLM_UI_PATH: /app/litellm/proxy/_experimental/out
+      LITELLM_UI_PATH: /var/lib/litellm/ui
       # 关闭对外暴露的 API 文档（Swagger "/"、ReDoc "/redoc"、OpenAPI "/openapi.json"）
       NO_DOCS: "True"
       NO_REDOC: "True"

@@ -521,6 +521,8 @@ curl $BASE_URL/v1/chat/completions \
 
 网关已配置主备切换，调用方**无感知**、无需改代码：
 
+- `qwen3-30b-a3b`：私有 vLLM 主 → 私有 `qwen3.8-27b` 备（节点不可用或超上下文时自动切换；`qwen3.8-27b` 仍可再切百炼 `qwen3.8-max`）
+- `qwen3.8-27b`：私有 vLLM 主 → 百炼 `qwen3.8-max` 备（节点不可用或超上下文时自动切换）
 - `deepseek-v4-pro` / `deepseek-v4-flash`：百炼主 → Azure 备
 - `gpt-5.4` / `gpt-5.4-mini` / `gpt-4o` 等：Azure 主 → OpenAI 备
 - `text-embedding-3-large/small`：Azure 主 → OpenAI 备
@@ -546,7 +548,7 @@ curl $BASE_URL/v1/chat/completions \
 | RAG 精排     | `qwen3-rerank`                                     |
 | 语音合成       | `gpt-4o-mini-tts`                                  |
 | 语音识别       | `gpt-4o-transcribe`                                |
-| 私有化部署      | `qwen3-30b-a3b`、`qwen3-32b-gptq-int4`              |
+| 私有化部署      | `qwen3-30b-a3b`、`qwen3.8-27b`、`qwen3-32b-gptq-int4` |
 
 
 ---

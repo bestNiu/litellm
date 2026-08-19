@@ -133,18 +133,38 @@ model_list:
       supports_reasoning: true
 
   # ── 私有自托管（vLLM） ──────────────────────────────────────────────────────
+  # 调用方式：hosted_vllm + OpenAI 兼容 /v1；不可用时 router 自动切 qwen3.8-27b
   - model_name: qwen3-30b-a3b
     litellm_params:
       model: hosted_vllm//models/Qwen/Qwen3-30B-A3B-Instruct-2507
-      api_base: http://123.56.168.189:8200/v1
+      api_base: os.environ/VLLM_QWEN3_30B_API_BASE
       api_key: "dummy"          # vLLM 若未开 --api-key，此处填任意非空值即可
+      timeout: 120              # 私有节点宕机时尽快失败并走 fallback，避免长时间挂起
+      num_retries: 0            # 不在同一不可用节点上重试，直接切备
     model_info:
       mode: chat
-      description: 私有 vLLM 部署 · Qwen3-30B-A3B-Instruct-2507
+      description: 私有 vLLM 部署 · Qwen3-30B-A3B-Instruct-2507（不可用自动切 qwen3.8-27b）
       max_input_tokens: 32768
       max_output_tokens: 8192
       supports_function_calling: true
       supports_reasoning: true
+
+  - model_name: qwen3.8-27b
+    litellm_params:
+      model: hosted_vllm//models/Qwen/Qwen3.8-27B
+      api_base: os.environ/VLLM_QWEN3_8_27B_API_BASE
+      api_key: "dummy"
+      timeout: 120
+      num_retries: 0
+    model_info:
+      mode: chat
+      description: 私有 vLLM 部署 · Qwen3.8-27B（原生视觉；不可用自动切 qwen3.8-max）
+      max_input_tokens: 262144
+      max_output_tokens: 32768
+      supports_vision: true
+      supports_function_calling: true
+      supports_reasoning: true
+      supports_parallel_function_calling: true
 
   - model_name: qwen3-32b-gptq-int4
     litellm_params:
@@ -852,7 +872,12 @@ environment_variables:
 
 router_settings:
   max_fallbacks: 3
+  allowed_fails: 1          # 私有 vLLM 一次失败即冷却，避免连续打到死节点
+  cooldown_time: 60
   fallbacks:
+    # 私有 vLLM：qwen3-30b-a3b → qwen3.8-27b → 百炼 qwen3.8-max
+    - qwen3-30b-a3b: [qwen3.8-27b]
+    - qwen3.8-27b: [qwen3.8-max]
     # 百炼主 → Azure 备
     - deepseek-v4-pro: [deepseek-v4-pro-azure-fallback]
     - deepseek-v4-flash: [deepseek-v4-flash-azure-fallback]
@@ -866,6 +891,9 @@ router_settings:
     - gpt-4o-mini: [gpt-4o-mini-openai-fallback]
     - text-embedding-3-large: [text-embedding-3-large-openai-fallback]
     - text-embedding-3-small: [text-embedding-3-small-openai-fallback]
+  context_window_fallbacks:
+    - qwen3-30b-a3b: [qwen3.8-27b]
+    - qwen3.8-27b: [qwen3.8-max]
 
 litellm_settings:
   drop_params: true
